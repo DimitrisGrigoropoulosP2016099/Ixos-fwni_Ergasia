@@ -3,12 +3,17 @@ close all;
 clf;
 pkg load signal;
 
-[y,fs] = audioread('t1.wav');
+i = argv();
+for a = 1:nargin
+filename = i{1,a};
+[y,fs]=audioread(i{1,a});
+
 
 b = fir1(500,0.2,"low");
 
-a = filter(b,1,y);
+ff = filter(b,1,y);
 
 b= fir1(501,0.10,"high");
-a=filter(b,1,a);
-audiowrite('t1_neo.wav',a*3,fs);
+ff=filter(b,1,ff);
+audiowrite('t1_',filename,ff*3,fs);
+endfor
